@@ -1,0 +1,108 @@
+// ==UserScript==
+// @name       TestScript
+// @version    0.1
+// @description  -
+// @match      http://kissanime.com/*
+// @copyright  2015+, Ratismal
+// ==/UserScript==
+
+//This script is for use with Tampermonkey (Chrome) or Greasemonkey (Firefox)
+
+var allDivs, thisDiv;
+allDivs = document.evaluate(
+    "//div[@class='divCloseBut']",
+    document,
+    null,
+    XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
+    null);
+
+var alliFrames, thisiFrame;
+alliFrames = document.getElementsByTagName('iframe');
+
+
+//--- contains is case-sensitive.
+var hideLink          = $("a:contains('Hide')");
+
+//--- Click the link if its action was overridden by JavaScript.
+//var evt                 = document.createEvent ("HTMLEvents");
+//evt.initEvent ("click", true, true);
+//hideLink[0].dispatchEvent (evt);
+
+$('body').append('<input type="button" value="Close Ads" id="CP">')
+$("#CP").css("position", "fixed").css("top", 0).css("left", 0);
+
+$('body').append('<input type="button" value="->" id="NEXT">')
+$("#NEXT").css("position", "fixed").css("top", 24).css("left", 32);
+
+$('body').append('<input type="button" value="<-" id="PREV">')
+$("#PREV").css("position", "fixed").css("top", 24).css("left", 0);
+
+function click(elm) {
+    var evt = document.createEvent('MouseEvents');
+    evt.initMouseEvent('click', true, true, window, 0, 1, 1, 1, 1, false, false, false, false, 0, null);
+    elm.dispatchEvent(evt);
+}
+
+function hideAllAds() {
+    window.setTimeout(hideAds,0);
+    window.setTimeout(hideAds,500);
+    window.setTimeout(hideAds,1000);
+    window.setTimeout(hideAds,1500);
+    window.setTimeout(hideAds,2000);
+    window.setTimeout(hideAds,2500);
+    window.setTimeout(hideAds,3000);
+    window.setTimeout(hideAds,3500);
+    window.setTimeout(hideAds,4000);
+    window.setTimeout(hideAds,4500);
+    window.setTimeout(hideAds,5000);
+}
+
+function hideAds() {
+    for (var i = 0; i < allDivs.snapshotLength; i++) {
+        thisDiv = allDivs.snapshotItem(i);
+        // do something with thisDiv
+        //click(thisDiv);
+        thisDiv.remove();
+    }
+    for (var i = 0; i < alliFrames.length; i++) {
+        thisiFrame = alliFrames[i];
+        // do something with iFrame
+        thisiFrame.remove();
+    }   
+}
+
+function next() {
+    var it = document.getElementById('btnNext').parentNode;
+    click(it);
+}
+
+function previous() {
+    var it = document.getElementById('btnPrevious').parentNode;
+    click(it);
+}
+
+$('#CP').click(function(){ 
+    hideAllAds();
+    //window.setTimeout(hideAds,10000);
+    //hideAds();
+});
+
+$('#NEXT').click(function(){ 
+    next();
+});
+
+$('#PREV').click(function(){ 
+    previous();
+});
+
+$(window).on('keydown', function(e){
+    if (e.keyCode == 78) {
+        next();
+    }
+    if (e.keyCode == 86) {
+        previous();   
+    }
+    if (e.keyCode == 66) {
+        hideAllAds();      
+    }
+});
