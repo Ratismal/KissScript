@@ -37,6 +37,10 @@ $("#NEXT").css("position", "fixed").css("top", 24).css("left", 32);
 $('body').append('<input type="button" value="<-" id="PREV">')
 $("#PREV").css("position", "fixed").css("top", 24).css("left", 0);
 
+$('body').append('<input type="button" value="Bookmark List" id="BOOK">')
+$("#BOOK").css("position", "fixed").css("top", 48).css("left", 0);
+
+
 function click(elm) {
     var evt = document.createEvent('MouseEvents');
     evt.initMouseEvent('click', true, true, window, 0, 1, 1, 1, 1, false, false, false, false, 0, null);
@@ -93,6 +97,10 @@ $('#NEXT').click(function(){
 
 $('#PREV').click(function(){ 
     previous();
+});
+
+$('#BOOK').click(function(){ 
+    window.open("http://kissanime.com/BookmarkList","_self")
 });
 
 $(window).on('keydown', function(e){
