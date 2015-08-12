@@ -2,7 +2,7 @@
 // @name       KissScript
 // @version    0.1
 // @description  -
-// @match      http://kissanime.com/*
+// @include     *://kissanime.com/*
 // @copyright  2015+, Ratismal
 // ==/UserScript==
 
